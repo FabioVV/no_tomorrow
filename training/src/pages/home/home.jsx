@@ -40,7 +40,6 @@ export const Home = () => {
           <div>Welcome, {user?.id}!</div>
         :
         <>
-          <div>You are not logged in</div>
 
           <Link to='/login'>Login</Link>
           <br></br>

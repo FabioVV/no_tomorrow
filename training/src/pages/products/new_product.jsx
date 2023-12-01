@@ -5,7 +5,7 @@ function ProductNew() {
 
     const [product, setProduct] = useState({
         name:'',
-        price:''
+        phone:''
     })
 
     const [result, setResult] = useState({
@@ -17,13 +17,13 @@ function ProductNew() {
         e.preventDefault();
 
 
-        const response = await fetch('http://192.168.1.37:5001/products/new', {
+        const response = await fetch('http://172.18.20.10:5001/products/new', {
             method:'POST',
             headers:{'Content-Type': 'application/json'},
             
             body:JSON.stringify({
                 name: product?.name,
-                price: product?.price
+                phone: product?.phone
             })
         })
 
@@ -43,8 +43,8 @@ function ProductNew() {
             <label htmlFor="">Name</label>
             <input onChange={(e) =>{setProduct({...product, name: e.target.value})}} type="text" name='name' id='name' />
 
-            <label htmlFor="">Price</label>
-            <input onChange={(e) =>{setProduct({...product, price: e.target.value})}} type="text" name='price' id='price' />
+            <label htmlFor="">Phone</label>
+            <input onChange={(e) =>{setProduct({...product, phone: e.target.value})}} type="text" name='phone' id='phone' />
             
             <br></br>
 

@@ -10,7 +10,7 @@ function Edit_product() {
 
     const [product, setProduct] = useState({
         name:'',
-        price:''
+        phone:''
     })
 
     const [result, setResult] = useState({
@@ -21,7 +21,7 @@ function Edit_product() {
     useState(()=>{
         const get_product = async (id) => {
     
-            const response = await fetch(`http://192.168.1.37:5001/products/${id}`, {
+            const response = await fetch(`http://172.18.20.10:5001/products/${id}`, {
               method: 'GET',
               headers:{'Content-Type': 'application/json'},
             }) 
@@ -32,7 +32,7 @@ function Edit_product() {
                 const data = await response.json()
                 setProduct({
                     name:data?.name,
-                    price:data?.price,
+                    phone:data?.phone,
                 })
 
             }
@@ -47,14 +47,14 @@ function Edit_product() {
     const handleEdit = async (e) => {
         e.preventDefault()
 
-        const response = await fetch(`http://192.168.1.37:5001/products/${id}`,{
+        const response = await fetch(`http://172.18.20.10:5001/products/${id}`,{
             
             method:'PATCH',
             headers:{'Content-type':'application/json'},
 
             body:JSON.stringify({
                 name:product?.name,
-                price:product?.price,
+                phone:product?.phone,
 
             })
         })
@@ -76,8 +76,8 @@ function Edit_product() {
             <label htmlFor="">Name</label>
             <input value={product?.name} onChange={(e) =>{setProduct({...product, name: e.target.value})}} type="text" name='name' id='name' />
 
-            <label htmlFor="">Price</label>
-            <input value={product?.price} onChange={(e) =>{setProduct({...product, price: e.target.value})}} type="text" name='price' id='price' />
+            <label htmlFor="">Phone</label>
+            <input value={product?.phone} onChange={(e) =>{setProduct({...product, phone: e.target.value})}} type="text" name='phone' id='phone' />
 
             <br></br>
 

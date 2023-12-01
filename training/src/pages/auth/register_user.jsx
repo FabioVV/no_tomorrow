@@ -9,12 +9,19 @@ function Register_user() {
         password:''
     })
 
+    const [result, setResult] = useState({
+        message:'',
+        error:false
+    })
+
 
     const CreateUser = async (e) =>{
         e.preventDefault()
 
+        
 
-        const response = await fetch('http://192.168.1.37:5001/register',{
+
+        const response = await fetch('http://172.18.20.10:5001/register',{
             method:'POST',
 
             headers:{'Content-type':'application/json'},
@@ -28,10 +35,11 @@ function Register_user() {
 
 
         if(response.ok){
-            alert('account created!')
+            setResult({message:`Account created.`})
 
         } else {
-            alert('Error creating account!')
+            const data = await response.json()
+            setResult({error:true , message:`Error creating account. ${data?.message}`})
         }
     }
 
@@ -50,6 +58,15 @@ function Register_user() {
             <br></br>
 
             <button type='submit'>Create account</button>
+
+            <br />
+
+            <p>
+            {result?.error ? <span style={{color:'salmon'}}>{result?.message}</span> 
+            : 
+            <span style={{color:'green'}}>{result?.message}</span>}
+            </p>
+
 
         </form>
 

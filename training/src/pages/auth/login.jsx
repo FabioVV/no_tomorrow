@@ -9,17 +9,33 @@ function Login_user() {
         password:''
     })
 
-    const [teste, setTest] = useState({
+    const [currentUser, setCurrentUser] = useState({
         id:'',
         email:''
+    })
+
+    const [result, setResult] = useState({
+        message:'',
+        error:false
     })
 
 
     const LoginUser = async (e) =>{
         e.preventDefault()
 
+        if(user?.email.trim() == ""){
+            setResult({error:true , message:'Email field is empty.'})
+            return false;
+        }
 
-        const response = await fetch('http://192.168.1.37:5001/login',{
+        if(user?.password.trim() == ""){
+            setResult({error:true , message:'Password field is empty.'})
+            return false;
+
+        }
+
+
+        const response = await fetch('http://172.18.20.10:5001/login',{
             method:'POST',
 
             headers:{'Content-type':'application/json'},
@@ -33,11 +49,12 @@ function Login_user() {
 
 
         if(response.ok){
-            alert('Logged in!')
+            window.location.href = '/products'
             const data = await response.json()
-            setTest({id:data?.id, email:data?.email})
+            setCurrentUser({id:data?.id, email:data?.email})
+
         } else {
-            alert('Error!')
+            setResult({error:true , message:'Email or password incorrect.'})
         }
     }
 
@@ -58,13 +75,18 @@ function Login_user() {
             <br />
 
             <button type='submit'>Login</button>
-            
+
+            <p>
+            {result?.error ? <span style={{color:'salmon'}}>{result?.message}</span> 
+            : 
+            <span style={{color:'green'}}>{result?.message}</span>}
+            </p>
+    
             <br />
+
+            {currentUser?.id ? <span style={{color:'green'}}>ID sqlite - Flask: {currentUser?.id}</span> : ""}
             <br />
-            <br />
-            {teste?.id ? <span style={{color:'green'}}>ID sqlite - Flask: {teste?.id}</span> : ""}
-            <br />
-            {teste?.email ? <span style={{color:'green'}}>Email: {teste?.email}</span> : ""}
+            {currentUser?.email ? <span style={{color:'green'}}>Email: {currentUser?.email}</span> : ""}
 
         </form>
     </DefaultPage>

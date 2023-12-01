@@ -21,7 +21,7 @@ function Products_listing({data, action_delete}){
           </td>
 
           <td>
-            R$ {parseFloat(product?.price).toFixed(2)}
+            {product?.phone}
           </td>
 
           <td>
@@ -43,7 +43,7 @@ function Products() {
 
   const get_products = async () => {
     
-    const response = await fetch(`http://192.168.1.37:5001/products`, {
+    const response = await fetch(`http://172.18.20.10:5001/products`, {
       method: 'GET',
       headers:{'Content-Type': 'application/json'},
     }) 
@@ -62,7 +62,7 @@ function Products() {
 
   const delete_products = async ({id}) => {
     
-    const response = await fetch(`http://192.168.1.37:5001/products/${id}`, {
+    const response = await fetch(`http://172.18.20.10:5001/products/${id}`, {
       method: 'DELETE',
       headers:{'Content-Type': 'application/json'},
     }) 
@@ -87,7 +87,7 @@ function Products() {
           <tr>
             <td>ID do produto</td>
             <td>Nome do produto</td>
-            <td>Preço do produto</td>
+            <td>Telefone do produto</td>
           </tr>
         </thead>
 
