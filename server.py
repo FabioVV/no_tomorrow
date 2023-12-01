@@ -76,6 +76,14 @@ def register():
         }), 400
     
 
+    # CHECA PRA VER SE email ESTÁ VAZIo
+    if email.strip() == '':
+
+        return jsonify({
+            'error':True,
+            'message':"Email can't be empty."
+        }), 400
+
     # CHECA PRA VER SE SENHA ESTÁ VAZIA
     if password.strip() == '':
 
@@ -84,13 +92,7 @@ def register():
             'message':"Password can't be empty."
         }), 400
     
-    # CHECA PRA VER SE email ESTÁ VAZIo
-    if email.strip() == '':
 
-        return jsonify({
-            'error':True,
-            'message':"Email can't be empty."
-        }), 400
     
 
     hashed_password = bcrypt.generate_password_hash(password)
