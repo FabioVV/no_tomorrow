@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
 import DefaultPage from '../default'
 
 function ProductNew() {
@@ -8,11 +8,16 @@ function ProductNew() {
         price:''
     })
 
+    const [result, setResult] = useState({
+        message:'',
+        error:false
+    })
+
     const CreateNew = async (e) => {
         e.preventDefault();
 
 
-        await fetch('http://192.168.100.190:5001/products/new', {
+        const response = await fetch('http://192.168.1.37:5001/products/new', {
             method:'POST',
             headers:{'Content-Type': 'application/json'},
             
@@ -21,6 +26,13 @@ function ProductNew() {
                 price: product?.price
             })
         })
+
+        if(response.ok){
+            setResult({message:'Product created successfully!'})
+        } else {
+            const error_message = await response.json()
+            setResult({message:`Error creating product. ${error_message['error']}`, error:true})
+        }
 
     }
 
@@ -39,6 +51,12 @@ function ProductNew() {
             <button type='submit'>Send</button>
 
         </form>
+
+        <p>
+            {result?.error ? <span style={{color:'salmon'}}>{result?.message}</span> 
+            : 
+            <span style={{color:'green'}}>{result?.message}</span>}
+        </p>
     </DefaultPage>
   )
 }

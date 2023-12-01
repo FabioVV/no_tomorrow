@@ -1,11 +1,12 @@
-import React, { useEffect, useState } from 'react'
+/* eslint-disable react/prop-types */
+/* eslint-disable react/jsx-key */
+import { useEffect, useState } from 'react'
 import DefaultPage from '../default'
-
+import { Link } from 'react-router-dom'
 
 
 function Products_listing({data, action_delete}){
 
-  
   
   return (
     <tbody>
@@ -20,11 +21,14 @@ function Products_listing({data, action_delete}){
           </td>
 
           <td>
-            {product?.price}
+            R$ {parseFloat(product?.price).toFixed(2)}
           </td>
 
           <td>
-            <span onClick={()=>action_delete({id:product?.id})} style={{color:'red', cursor:'pointer'}}>X</span>
+            <span onClick={ () => action_delete({id:product?.id})} style={{color:'red', cursor:'pointer'}}>X</span>
+          </td>
+          <td>
+            <span  style={{color:'blue', cursor:'pointer'}}><Link to={`/products/edit/${product?.id}`}>E</Link></span>
           </td>
         </tr>
       ))}
@@ -39,7 +43,7 @@ function Products() {
 
   const get_products = async () => {
     
-    const response = await fetch(`http://192.168.100.190:5001/products`, {
+    const response = await fetch(`http://192.168.1.37:5001/products`, {
       method: 'GET',
       headers:{'Content-Type': 'application/json'},
     }) 
@@ -54,9 +58,11 @@ function Products() {
 
   }
 
+
+
   const delete_products = async ({id}) => {
     
-    const response = await fetch(`http://192.168.100.190:5001/products/${id}`, {
+    const response = await fetch(`http://192.168.1.37:5001/products/${id}`, {
       method: 'DELETE',
       headers:{'Content-Type': 'application/json'},
     }) 
@@ -66,6 +72,7 @@ function Products() {
     }
   
   }
+
   
 
   useEffect(()=>{
