@@ -121,7 +121,6 @@ def login():
 
         session['user_id'] = user.id
 
-
         return jsonify({
             'id': user.id,
             'email':user.email

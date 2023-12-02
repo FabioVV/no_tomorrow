@@ -20,6 +20,17 @@ function Edit_product() {
 
     useState(()=>{
         const get_product = async (id) => {
+
+
+            if(product?.name.length > 20){
+                setResult({message:`Error creating product. Name length exceeds 20 characters.`, error:true})
+                return false
+            }
+    
+            if(product?.phone.length > 20){
+                setResult({message:`Error creating product. Phone length exceeds 20 characters.`, error:true})
+                return false
+            }
     
             const response = await fetch(`http://172.18.20.10:5001/products/${id}`, {
               method: 'GET',
